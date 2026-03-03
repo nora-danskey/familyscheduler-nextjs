@@ -16,13 +16,13 @@ const DEMO_EVENTS = [
 ];
 
 const DEFAULT_RULES = [
-  { id: "r1", name: "Morning / breakfast", startTime: "07:00", endTime: "08:20", who: "family", days: ["mon","tue","wed","thu","fri"], note: "Preferred together as a family; alternate if one parent is traveling or needs morning hours for work" },
-  { id: "r2", name: "School drop-off", startTime: "08:20", endTime: "09:00", who: "alternate", days: ["mon","tue","wed","thu","fri"], note: "Alternate by default" },
-  { id: "r3", name: "School pickup", startTime: "16:15", endTime: "17:30", who: "alternate", days: ["mon","tue","wed","thu","fri"], note: "" },
-  { id: "r7", name: "Afternoon play", startTime: "17:30", endTime: "18:30", who: "family", days: ["mon","tue","wed","thu","fri"], note: "At least one parent; preferred together" },
-  { id: "r4", name: "Dinner together", startTime: "18:30", endTime: "19:30", who: "family", days: ["mon","tue","wed","thu","fri","sat","sun"], note: "Always together" },
-  { id: "r5", name: "Bedtime routine", startTime: "19:30", endTime: "20:30", who: "split", days: ["mon","tue","wed","thu","fri","sat","sun"], note: "Preferred split, solo is fine when needed" },
-  { id: "r6", name: "Exercise", startTime: "06:00", endTime: "07:00", who: "each", days: ["mon","tue","wed","thu","fri","sat","sun"], note: "1 hour each, daily, any time during waking hours — schedule flexibly around other commitments" },
+  { id: "r1", name: "Morning / breakfast", startTime: "07:00", endTime: "08:30", who: "family", days: ["mon","tue","wed","thu","fri"], note: "Preferred together as a family; Nora breastfeeds (~30 min); alternate if one parent is traveling" },
+  { id: "r2", name: "School drop-off", startTime: "08:30", endTime: "09:00", who: "alternate", days: ["mon","tue","wed","thu","fri"], note: "One parent only — alternate by default" },
+  { id: "r3", name: "School pickup", startTime: "16:15", endTime: "17:30", who: "alternate", days: ["mon","tue","wed","thu","fri"], note: "One parent only — other can continue working" },
+  { id: "r7", name: "Family play", startTime: "17:00", endTime: "18:00", who: "family", days: ["mon","tue","wed","thu","fri"], note: "At least one parent from 5pm; pickup parent joins ~5:30" },
+  { id: "r4", name: "Dinner together", startTime: "18:00", endTime: "19:30", who: "family", days: ["mon","tue","wed","thu","fri","sat","sun"], note: "Always together — no work during this time" },
+  { id: "r5", name: "Bedtime routine", startTime: "19:30", endTime: "20:30", who: "split", days: ["mon","tue","wed","thu","fri","sat","sun"], note: "Preferred balanced split, one solo OK" },
+  { id: "r6", name: "Exercise", startTime: "06:00", endTime: "07:00", who: "each", days: ["mon","tue","wed","thu","fri","sat","sun"], note: "6 hours/week total each — subtract 1h per travel day; schedule flexibly around other commitments" },
 ];
 
 const WHO_OPTIONS = [
@@ -122,34 +122,53 @@ HOUSEHOLD RULES:
 ${ruleLines}
 
 WORK HOURS RULES:
-- Nora and Patrick each work independently — each needs 45h/week (90h combined), weekdays only
-- NO work on Sat or Sun — ever. If target can't fit in weekdays, note it but do not add weekend work
-- If a parent has an all-day travel event that week, subtract 9h per travel day from their target
+- ${a} and ${b} each work independently — each needs 45h/week (90h combined)
+- Weekdays strongly preferred; if 45h cannot fit on weekdays (due to travel or other constraints), work can spill into weekends — but minimize weekend work and avoid family anchor times
+- If a parent has an all-day travel event that week, subtract 9h per travel day from their work target
+- Exercise target: 6h/week each, subtract 1h per travel day (e.g. 2 travel days → 4h exercise that week)
 - Either parent can work any time 6am–10pm as long as kids have coverage
+- ${a} avoids working before 7:30am and after 9:30pm (breastfeeding schedule + personal preference)
+- ${b} is flexible with early morning and late night hours
+- ${a} breastfeeds during breakfast (~30 min minimum; she is present but partially occupied)
 - During daycare hours (drop-off to pickup, ~9am–4:15pm weekdays) BOTH parents can work simultaneously — no coverage needed
-- Outside daycare hours (6am–9am and 4:15pm–10pm), only one parent works at a time while the other covers kids
-- Whichever parent does pickup that day must end their work block at 4:15pm — the other parent can continue working
-- No work during dinner (6:30–7:30pm) or bedtime (7:30–8:30pm) — both parents present
+- Outside daycare hours, only one parent works at a time while the other covers kids
+- Whichever parent does pickup that day must end their work block at 4:15pm — the other parent can continue working until 5pm
+- At least one parent must always be present during: breakfast, dinner, bedtime, and family play
+- Only one parent is needed for pickup or drop-off (the other can continue working)
+- No work during dinner (6:00–7:30pm) or bedtime (7:30–8:30pm)
 - Do not schedule a parent for work during their own timed flight or travel event window
 
 WEEKENDS (Sat–Sun):
-- Breakfast together: 7:00–9:00am (family, one parent minimum, counts as parenting)
-- Fill remaining unscheduled daytime (9am–6pm) with "Family play" (one parent minimum, counts as parenting)
+- Breakfast together: 7:00–9:00am (family, at least one parent, counts as parenting)
+- Fill unscheduled daytime (9am–6pm) with "Family play" (at least one parent, counts as parenting)
 - Include any kid activities from the calendar (swim, music class, parties) as blocks on the correct day/time
-- If a parent has a personal event (party, trip), they cannot cover family duties during that window
+- If a parent has a personal event (party, trip, mahjong), they cannot cover family duties during that window
+- Weekend work: only schedule if a parent couldn't fit their 45h target on weekdays — use focused blocks outside family anchor times
 
 FIXED DAILY ANCHORS (weekdays):
-- Morning/breakfast: 7:00–8:20am (preferred together; alternate if one parent traveling or needs morning work hours)
-- Drop-off: 8:20–9:00am · Pickup: 4:15–5:30pm
-- Afternoon play: 5:30–6:30pm (at least one parent present)
-- Dinner together: 6:30–7:30pm (always, no exceptions)
-- Bedtime: 7:30–8:30pm (preferred balanced, one solo OK)
-- Exercise: 1 hour each, daily, any time during waking hours
+- Morning/breakfast: 7:00–8:30am (preferred together; ${a} breastfeeds so 30min minimum; one parent can work from 7am if other covers breakfast)
+- Drop-off: 8:30–9:00am (one parent only — alternate)
+- Main work window: 9:00am–4:15pm (BOTH parents work simultaneously)
+- Pickup: 4:15–5:30pm (one parent only; other continues working)
+- Family play: 5:00–6:00pm (at least one parent from 5pm; pickup parent joins ~5:30)
+- Dinner: 6:00–7:30pm (always together — no work)
+- Bedtime: 7:30–8:30pm (preferred balanced split, one solo OK — no work)
+- Evening work (optional): 8:30–10pm — ${a} stops by 9:30pm; ${b} can go to 10pm
+
+RECURRING PERSONAL EVENTS (always block these):
+- ${a}: Mahjong every Thursday 6:00–9:30pm — ${a} unavailable; ${b} covers dinner and bedtime solo
+- Kids (Alma): Swim class every Sunday ~10:00–11:00am — one parent must cover
+- Kids (Alma): Music class every Saturday ~12:00–1:30pm — one parent must cover
+
+PARENTING BALANCE:
+- Aim for as balanced parenting as possible between ${a} and ${b}
+- ${a} will naturally do more parenting due to breastfeeding; acknowledge this but offset with other duties where possible
+- ${b} should take roughly equal share of bedtimes, drop-offs, and pickups
 
 CALENDAR INTEGRATION:
-- Read all events in CALENDAR DATA and include kid activities (swim, music, parties) as blocks in the schedule
-- Timed personal events for one parent mean that parent is unavailable during that window — assign duties to the other parent
-- If a parent has a personal commitment that conflicts with kid coverage and no other parent is available, flag it with a note
+- Read all events in CALENDAR DATA and include kid activities as blocks on the correct day/time
+- Timed personal events for one parent mean that parent is unavailable — assign duties to the other
+- Flag conflicts when no coverage is available
 
 EVENT TAGS: ${tagLines || "None yet."}
 CALENDAR DATA sent with each message.`;
@@ -170,27 +189,33 @@ function getEventsForDay(events, day) {
 }
 function timeToMin(t) { const [h, m] = (t || "0:00").split(":").map(Number); return h * 60 + m; }
 // Work hours = 45h/week each, minus 9h per travel day (all-day event tagged to that parent)
+// Exercise target = 6h/week each, minus 1h per travel day
 function computeWorkHours(scheduleDays, events, eventLabels) {
   const MAX_WEEKDAY_HOURS = 9; // max realistic work hours in a single weekday
   function weekWork(weekDays) {
     let noraTravelDays = 0, patrickTravelDays = 0;
     let noraWorkableDays = 0, patrickWorkableDays = 0;
+    let noraAllDayTravelTotal = 0, patrickAllDayTravelTotal = 0;
     weekDays.forEach(dateStr => {
       const [y, m, d] = dateStr.split("-").map(Number);
       const day = new Date(y, m - 1, d);
-      const dow = day.getDay();
-      if (dow === 0 || dow === 6) return; // skip weekends
       const dayEvs = getEventsForDay(events, day);
       const noraTravels = dayEvs.some(e => e.start?.date && eventLabels[e.id] === "nora");
       const patrickTravels = dayEvs.some(e => e.start?.date && eventLabels[e.id] === "patrick");
+      if (noraTravels) noraAllDayTravelTotal++;
+      if (patrickTravels) patrickAllDayTravelTotal++;
+      const dow = day.getDay();
+      if (dow === 0 || dow === 6) return; // skip weekends for work calc only
       if (noraTravels) noraTravelDays++; else noraWorkableDays++;
       if (patrickTravels) patrickTravelDays++; else patrickWorkableDays++;
     });
     const noraTarget = Math.max(0, 45 - 9 * noraTravelDays);
     const patrickTarget = Math.max(0, 45 - 9 * patrickTravelDays);
+    const noraExerciseTarget = Math.max(0, 6 - noraAllDayTravelTotal);
+    const patrickExerciseTarget = Math.max(0, 6 - patrickAllDayTravelTotal);
     const noraWarning = noraTarget > noraWorkableDays * MAX_WEEKDAY_HOURS;
     const patrickWarning = patrickTarget > patrickWorkableDays * MAX_WEEKDAY_HOURS;
-    return { nora: noraTarget, patrick: patrickTarget, noraWarning, patrickWarning };
+    return { nora: noraTarget, patrick: patrickTarget, noraExerciseTarget, patrickExerciseTarget, noraWarning, patrickWarning };
   }
   return {
     week1: weekWork(scheduleDays.slice(0, 7).map(d => d.date)),
@@ -402,10 +427,11 @@ function WeeklyTotals({ summary, partnerAName, partnerBName }) {
     if (!data) return null;
     const { nora, patrick, notes } = data;
     const a = nora, b = patrick;
+    const exerciseTarget = Math.min(a?.exerciseTarget ?? 6, b?.exerciseTarget ?? 6);
     const cats = [
       { label: "Work", aVal: a?.workHours, bVal: b?.workHours, color: "#3B82F6", target: 45 },
       { label: "Parenting", aVal: a?.parentingHours, bVal: b?.parentingHours, color: "#E67C73" },
-      { label: "Exercise", aVal: a?.exerciseHours, bVal: b?.exerciseHours, color: "#0B8043" },
+      { label: "Exercise", aVal: a?.exerciseHours, bVal: b?.exerciseHours, color: "#0B8043", target: exerciseTarget },
       { label: "Free time", aVal: a?.freeHours, bVal: b?.freeHours, color: "#8E24AA" },
     ];
     return (
@@ -665,8 +691,8 @@ export default function FamilyScheduler() {
       return warnings.join(" · ");
     };
     setSummary({
-      week1: { nora: { workHours: work.week1.nora, ...other.week1.nora }, patrick: { workHours: work.week1.patrick, ...other.week1.patrick }, notes: weekNote(work.week1, partnerAName, partnerBName) },
-      week2: { nora: { workHours: work.week2.nora, ...other.week2.nora }, patrick: { workHours: work.week2.patrick, ...other.week2.patrick }, notes: weekNote(work.week2, partnerAName, partnerBName) },
+      week1: { nora: { workHours: work.week1.nora, exerciseTarget: work.week1.noraExerciseTarget, ...other.week1.nora }, patrick: { workHours: work.week1.patrick, exerciseTarget: work.week1.patrickExerciseTarget, ...other.week1.patrick }, notes: weekNote(work.week1, partnerAName, partnerBName) },
+      week2: { nora: { workHours: work.week2.nora, exerciseTarget: work.week2.noraExerciseTarget, ...other.week2.nora }, patrick: { workHours: work.week2.patrick, exerciseTarget: work.week2.patrickExerciseTarget, ...other.week2.patrick }, notes: weekNote(work.week2, partnerAName, partnerBName) },
     });
   }, [scheduleDays, events, eventLabels, partnerAName, partnerBName]);
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
@@ -735,7 +761,7 @@ export default function FamilyScheduler() {
     const travelSection = travelLines.length ? `\nTRAVEL PERIODS — parent is physically away, cannot do morning/drop-off/pickup/dinner/bedtime:\n${travelLines.join("\n")}` : "";
 
     const isScheduleReq = /schedule|suggest|two.?week|2.week/i.test(text);
-    const fmtReminder = isScheduleReq ? "\n\n[OUTPUT FORMAT REQUIRED: <SUMMARY>{\"week1\":{\"nora\":{\"workHours\":0,\"parentingHours\":0,\"exerciseHours\":0,\"freeHours\":0},\"patrick\":{...},\"notes\":\"\"},\"week2\":{...}}</SUMMARY> then <SCHEDULE>[{\"date\":\"YYYY-MM-DD\",\"label\":\"Mon Feb 24\",\"blocks\":[{\"s\":\"HH:MM\",\"e\":\"HH:MM\",\"t\":\"title\",\"w\":\"who\"}]}]</SCHEDULE> then max 2 plain sentences. Output SUMMARY tag FIRST. No text before it. Include all 14 days. Honor travel periods — traveling parent cannot do any home duties.]" : "";
+    const fmtReminder = isScheduleReq ? "\n\n[OUTPUT FORMAT REQUIRED: <SUMMARY>{\"week1\":{\"nora\":{\"workHours\":0,\"parentingHours\":0,\"exerciseHours\":0,\"freeHours\":0},\"patrick\":{...},\"notes\":\"\"},\"week2\":{...}}</SUMMARY> then <SCHEDULE>[{\"date\":\"YYYY-MM-DD\",\"label\":\"Mon Feb 24\",\"blocks\":[{\"s\":\"HH:MM\",\"e\":\"HH:MM\",\"t\":\"title\",\"w\":\"who\"}]}]</SCHEDULE> then max 2 plain sentences. Output SUMMARY tag FIRST. No text before it. Include all 14 days. Honor travel periods — traveling parent cannot do any home duties. Key anchors: breakfast 7:00-8:30am, drop-off 8:30-9am, pickup 4:15-5:30pm, family play 5-6pm, dinner 6-7:30pm, bedtime 7:30-8:30pm. Nora has mahjong every Thursday 6-9:30pm.]" : "";
     const userMsg = { role: "user", content: `CALENDAR DATA:\n${calData}\n\nEVENT TAGS:\n${tagLines || "None"}${travelSection}\n\nUSER: ${text}${fmtReminder}`, displayContent: text };
     const newMsgs = [...messages, userMsg];
     setMessages(newMsgs);
