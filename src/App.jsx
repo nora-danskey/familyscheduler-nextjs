@@ -780,7 +780,7 @@ export default function FamilyScheduler() {
     });
 
     try {
-      const res = await fetch("/scheduler/api/chat", {
+      const res = await fetch("/api/chat", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           model: "claude-haiku-4-5-20251001", max_tokens: 4000,
